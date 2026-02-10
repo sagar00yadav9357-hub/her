@@ -11,34 +11,54 @@
     body {
         margin: 0;
         height: 100vh;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: 'Pacifico', cursive;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'Pacifico', cursive;
         overflow: hidden;
+        background: url("image.png") no-repeat center center/cover;
+    }
+
+    /* Dark overlay */
+    body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        z-index: 0;
+    }
+
+    /* Falling hearts */
+    .heart {
+        position: absolute;
+        top: -50px;
+        color: #ff4d6d;
+        font-size: 24px;
+        animation: fall linear infinite;
+        z-index: 1;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+        }
     }
 
     .popup {
-        background: white;
+        position: relative;
+        background: rgba(255,255,255,0.95);
         padding: 60px;
         border-radius: 35px;
         text-align: center;
         box-shadow: 0 25px 60px rgba(0,0,0,0.3);
         width: 650px;
         max-width: 92%;
+        z-index: 2;
     }
 
     h1 {
         color: #ff4d6d;
-        font-size: 52px;
-        margin-bottom: 30px;
-    }
-
-    .popup img {
-        width: 100%;
-        max-width: 380px;
-        border-radius: 25px;
+        font-size: 48px;
         margin-bottom: 30px;
     }
 
@@ -62,6 +82,7 @@
         border: none;
         border-radius: 10px;
         cursor: pointer;
+        z-index: 3;
     }
 
     .final-screen {
@@ -97,19 +118,26 @@
 </head>
 <body>
 
+<!-- Popup -->
 <div class="popup">
-    <h1>Will you be my Valentine?</h1>
-
-    <!-- Popup image -->
-    <img src="image.png" alt="love image">
-
-    <br>
+    <h1>Will you be my Valentine, Motchu?</h1>
     <button class="yes" onclick="yesClicked()">YES</button>
 </div>
 
 <button class="no" id="noBtn">No</button>
 
 <script>
+// Falling hearts generator
+for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+    heart.style.fontSize = (16 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+}
+
 function yesClicked() {
     document.body.innerHTML = `
         <div class="final-screen">
